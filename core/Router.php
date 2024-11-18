@@ -38,16 +38,19 @@ class Router{
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
 
-        if($callback === false){
+        if($callback === false)
+        {
             $this->response->setStatusCode(404);
             return $this->renderView("_404");
         }
 
-        if (is_string($callback)){
+        if (is_string($callback))
+        {
             return $this->renderView($callback);
         }
 
-        if (is_array($callback)) {
+        if (is_array($callback)) 
+        {
             Application::$app->controller = new $callback[0]();
             $callback[0] = Application::$app->controller;
         }
@@ -80,7 +83,8 @@ class Router{
     }
 
     protected function renderOnlyView($view, $params){
-        foreach($params as $key => $value){
+        foreach($params as $key => $value)
+        {
             $$key = $value;
         }
 
