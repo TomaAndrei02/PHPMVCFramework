@@ -40,6 +40,11 @@ class Application{
         }
     }
 
+    public static function isGuest()
+    {
+        return !self::$app->user;
+    }
+
     public function run(){
 
         echo $this->router->resolve();

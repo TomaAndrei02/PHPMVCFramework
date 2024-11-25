@@ -52,6 +52,11 @@ class AuthController extends Controller{
         return $this->render('register', [
             'model' => $user
         ]);
+    }
 
+    public function logout(Request $request, Response $response)
+    {
+        Application::$app->logout();
+        $response->redirect('/');
     }
 }
