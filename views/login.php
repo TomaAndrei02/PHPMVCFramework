@@ -2,6 +2,7 @@
 #/** @var $model \app\models\User */
 ?>
 
+<link rel="stylesheet" href="/css/bootstrap.css">
 
 <h1>Login</h1>
 

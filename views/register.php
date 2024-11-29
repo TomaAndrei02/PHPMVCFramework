@@ -2,6 +2,8 @@
 #/** @var $model \app\models\User */
 ?>
 
+<link rel="stylesheet" href="/css/bootstrap.css">
+
 <h1>Create an account</h1>
 
 <?php $form = \app\core\form\Form::begin('', "post") ?>
