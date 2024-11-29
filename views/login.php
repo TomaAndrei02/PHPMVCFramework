@@ -1,5 +1,6 @@
 <?php
 #/** @var $model \app\models\User */
+$this->title = 'Login';
 ?>
 
 <link rel="stylesheet" href="/css/bootstrap.css">

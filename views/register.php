@@ -1,5 +1,6 @@
 <?php
 #/** @var $model \app\models\User */
+$this->title = 'Register';
 ?>
 
 <link rel="stylesheet" href="/css/bootstrap.css">

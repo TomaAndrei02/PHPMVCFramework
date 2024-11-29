@@ -25,7 +25,7 @@ use app\core\Application;
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
               <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
@@ -35,7 +35,7 @@ use app\core\Application;
 
       <?php if(Application::isGuest()): ?>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
@@ -44,7 +44,7 @@ use app\core\Application;
         </ul>
         <?php else: ?>
           <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
                 <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item active">
