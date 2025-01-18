@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    working_dir: /usr/share/nginx/html
+    ports:
+      - "9000:9000"  # Ensure PHP-FPM is accessible via port 9000
+    volumes:
+      - .:/usr/share/nginx/html
+    environment:
+      DB_DSN: mysql:host=db;port=3306;dbname=mvc_framework
+      DB_USER: root
+      DB_PASSWORD: secret
+
+  web:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: secret  # Set the root password
+      MYSQL_DATABASE: mvc_framework
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"  # Expose phpMyAdmin to localhost
+    environment:
+      PMA_HOST: db  # The MySQL service name
+      MYSQL_ROOT_PASSWORD: secret
+    depends_on:
+      - db
+
+volumes:
+  db_data: {}

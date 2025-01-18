@@ -20,6 +20,7 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
+
 $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/contact', [SiteController::class, 'contact']);
 $app->router->post('/contact', [SiteController::class, 'contact']);
@@ -30,6 +31,42 @@ $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/profile', [AuthController::class, 'profile']);
+
+$app->router->get('/api/users', function () {
+    $dsn = $_ENV['DB_DSN'];
+    $dbUser = $_ENV['DB_USER'];
+    $dbPassword = $_ENV['DB_PASSWORD'];
+
+    try {
+        // Connect to the database
+        $pdo = new PDO($dsn, $dbUser, $dbPassword);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        // Query the database
+        $stmt = $pdo->query("SELECT id, firstname, lastname, email FROM users");
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Return data as JSON
+        header("Content-Type: application/json");
+        echo json_encode($users);
+    } catch (PDOException $e) {
+        // Handle errors
+        http_response_code(500);
+        echo json_encode(["error" => "Database error: " . $e->getMessage()]);
+    }
+});
+
+$app->router->get('/api/posts', function() {
+    return json_encode([
+        ['id' => 1, 'title' => 'First Post', 'content' => 'This is the first post.'],
+        ['id' => 2, 'title' => 'Second Post', 'content' => 'This is the second post.'],
+    ]);
+});
+
+
+header("Access-Control-Allow-Origin: *"); // Allows all domains
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS"); // Allowed HTTP methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allowed headers
 
 
 

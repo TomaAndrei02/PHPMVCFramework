@@ -52,16 +52,21 @@ class Application{
     }
 
     public function run()
-    {
-        try{
-            echo $this->router->resolve();
-        }catch(\Exception $e){
-            $this->response->setStatusCode($e->getCode());
-            echo $this->view->renderView('_error', [
-                'exception' => $e
-            ]);
-        }
+{
+    try {
+        echo $this->router->resolve();
+    } catch (\Exception $e) {
+        // Ensure the status code is an integer and within the valid HTTP range (100–599)
+        $statusCode = is_int($e->getCode()) && $e->getCode() >= 100 && $e->getCode() <= 599
+            ? $e->getCode()
+            : 500; // Default to 500 for invalid or non-integer codes
+        $this->response->setStatusCode($statusCode);
+        
+        echo $this->view->renderView('_error', [
+            'exception' => $e
+        ]);
     }
+}
 
     public function getController(): \app\core\Controller{
         return $this->controller;
